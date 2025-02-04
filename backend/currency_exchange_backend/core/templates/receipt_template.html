@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Operation Receipt #{{ operation.id }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A4;
+      margin: 1cm;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .receipt-container {
+      background: #ffffff;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-top: 5px solid #3498db;
+      position: relative;
+    }
+
+    /* Company Logo */
+    .logo {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #3498db;
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Embed your logo as base64 below */
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* If using a local path, comment out background-image and uncomment img tag styles
+    .logo img {
+      width: 100%;
+      height: auto;
+    }
+    */
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .divider {
+      border-bottom: 2px solid #3498db;
+      width: 60px;
+      margin: 0 auto 30px;
+    }
+
+    .info-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .info-box {
+      flex: 1 1 45%;
+      background-color: #f9fafb;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-box label {
+      display: block;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 5px;
+      text-transform: capitalize;
+      font-size: 14px;
+    }
+
+    .info-box span {
+      display: block;
+      color: #2980b9;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 16px;
+      color: #777;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding-top: 15px;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    .edited-note {
+      margin-top: 15px;
+      text-align: center;
+      color: #e74c3c;
+      font-style: italic;
+      font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .receipt-container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .divider {
+        width: 40px;
+        margin-bottom: 20px;
+      }
+
+      .info-section {
+        flex-direction: column;
+      }
+
+      .info-box {
+        flex: 1 1 100%;
+      }
+
+      .footer {
+        font-size: 14px;
+      }
+
+      .edited-note {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt-container">
+    <!-- Company Logo -->
+    <div class="logo">
+      <!-- If embedding as base64, use background-image as above -->
+      <!-- If using a local path, uncomment and use the img tag below -->
+      <!-- <img src="path_to_your_logo.png" alt="Company Logo"> -->
+    </div>
+
+    <h2>Operation Receipt #{{ operation.id }}</h2>
+    <div class="divider"></div>
+
+    <div class="info-section">
+      <div class="info-box">
+        <label>Type</label>
+        <span>{{ operation.operation_type|title }}</span>
+      </div>
+      <div class="info-box">
+        <label>Currency</label>
+        <span>{{ operation.currency.name }}</span>
+      </div>
+      <div class="info-box">
+        <label>Cashier</label>
+        <span>{{ operation.cashier_name }}</span>
+      </div>
+      <div class="info-box">
+        <label>Amount</label>
+        <span>{{ operation.amount }}</span>
+      </div>
+      <div class="info-box">
+        <label>Exchange Rate</label>
+        <span>{{ operation.exchange_rate }}</span>
+      </div>
+      <div class="info-box">
+        <label>Total (Som)</label>
+        <span>{{ operation.total_in_som }}</span>
+      </div>
+      <div class="info-box">
+        <label>Date/Time</label>
+        <span>{{ operation.timestamp|date:"Y-m-d H:i:s" }}</span>
+      </div>
+    </div>
+
+    {% if edited_by %}
+      <div class="edited-note">
+        Edited by cashier: {{ edited_by }}
+      </div>
+    {% endif %}
+
+    <div class="footer">
+      Thank you for using our service!
+    </div>
+  </div>
+</body>
+</html>
