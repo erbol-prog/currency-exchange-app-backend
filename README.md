@@ -63,7 +63,7 @@ Installation & Setup
 
 1. Clone the repository
 
-git clone https://github.com/your-repo-url.git
+git clone
 cd currency-exchange-backend
 
 
